@@ -1,4 +1,8 @@
 package controllers;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -6,15 +10,19 @@ import app.Main;
 import config.SearchParameters;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -88,6 +96,8 @@ public class ProgramViewController {
     private boolean downloadCharacters;
     private boolean downloadTags;
     
+    private Scene _aboutScene;
+    
     // Checkboxes
     @FXML
     void onCheckArtistsCheckBox(ActionEvent event) {
@@ -108,7 +118,11 @@ public class ProgramViewController {
     // Menu events
     @FXML
     void onMenuAboutClick(ActionEvent event) {
-
+    	Stage newStage = new Stage();
+    	newStage.setResizable(false);
+    	newStage.initModality(Modality.APPLICATION_MODAL);
+    	newStage.setScene(buildAboutDialog(newStage));
+    	newStage.showAndWait();
     }
     @FXML
     void onMenuArtistListClick(ActionEvent event) {
@@ -166,6 +180,44 @@ public class ProgramViewController {
     	});
     	newStage.initModality(Modality.APPLICATION_MODAL);
     	newStage.showAndWait();
+    }
+    
+    private Scene buildAboutDialog(Stage stage) {
+    	if (_aboutScene == null) {
+			Button btnOkay = new Button("OK");
+			btnOkay.setOnAction(value -> {
+				stage.close();
+			});
+			Label appInfoLabel = new Label("WarvenGrabber\nBy @WarvenAfterDark on Twitter\nVersion 1.0");
+			appInfoLabel.setWrapText(true);
+			appInfoLabel.setTextAlignment(TextAlignment.CENTER);
+			Label bugInfoLabel = new Label("Submit any bugs or feature requests through the link below.");
+			bugInfoLabel.setWrapText(true);
+			bugInfoLabel.setTextAlignment(TextAlignment.CENTER);
+			Hyperlink githubLink = new Hyperlink("https://github.com/WarvenAfterDark/WarvenGrabber/issues/new/choose");
+			githubLink.setOnAction(value -> {
+				try {
+					Desktop.getDesktop().browse(new URI(githubLink.getText()));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (URISyntaxException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			});
+			VBox container = new VBox();
+			container.setSpacing(16);
+			container.setAlignment(Pos.CENTER);
+			container.getChildren().addAll(appInfoLabel, bugInfoLabel, githubLink, btnOkay);
+			container.setPadding(new Insets(8));
+			Pane root = new Pane(container);
+			root.setPrefSize(300, 250);
+			container.prefWidthProperty().bind(root.widthProperty());
+			container.prefHeightProperty().bind(root.heightProperty());
+			_aboutScene = new Scene(root);
+    	}
+    	return _aboutScene;
     }
     
 }
