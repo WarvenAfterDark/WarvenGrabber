@@ -13,6 +13,9 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextArea;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ProgramViewController {
@@ -123,6 +126,7 @@ public class ProgramViewController {
     	Scene rootScene = new Scene(root);
     	newStage.setResizable(false);
     	newStage.setScene(rootScene);
+    	newStage.initModality(Modality.APPLICATION_MODAL);
     	newStage.showAndWait();
     }
     @FXML
@@ -160,6 +164,7 @@ public class ProgramViewController {
     			break;
     		}
     	});
+    	newStage.initModality(Modality.APPLICATION_MODAL);
     	newStage.showAndWait();
     }
     
