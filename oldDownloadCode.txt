@@ -1,0 +1,32 @@
+public void download(String dirPath) {
+		
+	if (!Files.exists(Paths.get(dirPath))) {
+		try {
+			Files.createDirectories(Paths.get(dirPath));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return;
+		}
+	}
+	
+	try (InputStream in = new URL(media.url).openStream(); OutputStream out = new FileOutputStream(dirPath + "/" + media.name);) {
+		
+		byte[] buffer = new byte[512000];
+		
+		int read;
+		
+		while((read = in.read(buffer)) != -1) {
+			
+			out.write(buffer, 0, read);
+			
+		}
+		
+	} catch (IOException e) {
+		System.err.printf("Error downloading '%s': %s\n",
+						   media.name,
+						   e.getMessage());
+		return;
+	}
+
+}
