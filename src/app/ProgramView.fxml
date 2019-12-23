@@ -21,7 +21,7 @@
                   <MenuItem fx:id="menu_tagList" mnemonicParsing="false" onAction="#onMenuTagListClick" text="Tag List" />
             <MenuItem fx:id="menu_artistList" mnemonicParsing="false" onAction="#onMenuArtistListClick" text="Artist List" />
                   <MenuItem fx:id="menu_characterList" mnemonicParsing="false" onAction="#onMenuCharacterListClick" text="Character List" />
-                  <MenuItem fx:id="menu_destinationFolder" mnemonicParsing="false" onAction="#onMenuDestinationFolderClick" text="Destination Folder" />
+                  <MenuItem fx:id="menu_settings" mnemonicParsing="false" onAction="#onMenuSettingClick" text="Settings" />
           </items>
         </Menu>
             <Menu mnemonicParsing="false" text="Help">

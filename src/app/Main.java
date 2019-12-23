@@ -10,6 +10,7 @@ import java.util.List;
 import org.json.JSONObject;
 
 import config.SearchParameters;
+import config.Settings;
 import controllers.ProgramViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -57,7 +58,8 @@ public class Main extends Application {
 	public static void savePreferences() {
 		File prefFile = new File("prefs.json");
 		JSONObject saveObject = new JSONObject();
-		saveObject.put("SearchParameters", SearchParameters.save());
+		saveObject.put(SearchParameters.JSON_KEY, SearchParameters.save());
+		saveObject.put(Settings.JSON_KEY, Settings.save());
 		try {
 			Files.write(Paths.get(prefFile.toURI()), saveObject.toString().getBytes(), StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING);
 		} catch (IOException e) {
@@ -76,6 +78,7 @@ public class Main extends Application {
 			jsonBuilder.deleteCharAt(jsonBuilder.length() - 1);
 			JSONObject loadObj = new JSONObject(jsonBuilder.toString());
 			SearchParameters.load(loadObj);
+			Settings.load(loadObj);
 		} catch (IOException e) {
 			System.err.printf("Could not load preferences: %s", e.getMessage());
 			return;

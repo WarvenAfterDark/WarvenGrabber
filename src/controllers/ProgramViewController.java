@@ -33,7 +33,7 @@ public class ProgramViewController {
     @FXML
     private MenuItem menu_characterList;
     @FXML
-    private MenuItem menu_destinationFolder;
+    private MenuItem menu_settings;
     @FXML
     private MenuItem menu_about;
     @FXML
@@ -68,7 +68,7 @@ public class ProgramViewController {
         assert menu_tagList != null : "fx:id=\"menu_tagList\" was not injected: check your FXML file 'Untitled'.";
         assert menu_artistList != null : "fx:id=\"menu_artistList\" was not injected: check your FXML file 'Untitled'.";
         assert menu_characterList != null : "fx:id=\"menu_characterList\" was not injected: check your FXML file 'Untitled'.";
-        assert menu_destinationFolder != null : "fx:id=\"menu_destinationFolder\" was not injected: check your FXML file 'Untitled'.";
+        assert menu_settings != null : "fx:id=\"menu_destinationFolder\" was not injected: check your FXML file 'Untitled'.";
         assert menu_about != null : "fx:id=\"menu_about\" was not injected: check your FXML file 'Untitled'.";
         assert menu_instructions != null : "fx:id=\"menu_instructions\" was not injected: check your FXML file 'Untitled'.";
         assert lbl_currentTag != null : "fx:id=\"lbl_currentTag\" was not injected: check your FXML file 'Untitled'.";
@@ -116,8 +116,14 @@ public class ProgramViewController {
     	openEditListView("Characters", SearchParameters.getCharacters());
     }
     @FXML
-    void onMenuDestinationFolderClick(ActionEvent event) {
-
+    void onMenuSettingClick(ActionEvent event) {
+    	Stage newStage = new Stage();
+    	SettingsViewController controller = new SettingsViewController(newStage);
+    	Parent root = Main.loadFXML(Main.class, "SettingsView.fxml", controller);
+    	Scene rootScene = new Scene(root);
+    	newStage.setResizable(false);
+    	newStage.setScene(rootScene);
+    	newStage.showAndWait();
     }
     @FXML
     void onMenuInstructionsClick(ActionEvent event) {
